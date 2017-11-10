@@ -1,0 +1,47 @@
+{
+	"dc=example,dc=org": {},
+	"cn=admin,dc=example,dc=org": {
+		"userpassword": "admin"
+	},
+
+	"ou=Users,dc=example,dc=org": {},
+	"cn=zombie1000,ou=users,dc=example,dc=org": {
+		"objectclass": "inetOrgPerson",
+		"displayname": "Alice",
+		"cn": "zombie1000",
+		"userpassword": "123",
+		"mail": "alice@example.org",
+		"entryuuid": "a7cc3c2e-498b-429d-b519-3ea330afc61d"
+	},
+	"cn=zombie1001,ou=users,dc=example,dc=org": {
+		"objectclass": "inetOrgPerson",
+		"displayname": "Bob",
+		"cn": "zombie1001",
+		"userpassword": "123",
+		"mail": "bob@example.org",
+		"entryuuid": "943c5f20-cc47-4d43-9c26-af297c5150b2"
+	},
+	"cn=zombie1002,ou=users,dc=example,dc=org": {
+		"objectclass": "inetOrgPerson",
+		"displayname": "Carol",
+		"cn": "zombie1002",
+		"userpassword": "123",
+		"mail": "carol@example.org",
+		"entryuuid": "01b34dab-93d4-4778-b8c9-f32419d0ba44"
+	},
+	"cn=zombie1003,ou=users,dc=example,dc=org": {
+		"objectclass": "inetOrgPerson",
+		"displayname": "Dave",
+		"cn": "zombie1003",
+		"userpassword": "123",
+		"mail": "dave@example.org",
+		"entryuuid": "16a6eaad-064a-4fa2-9d23-59d3e4d357c2"
+	},
+
+	"ou=Groups,dc=example,dc=org": {},
+	"cn=horde1000,ou=groups,dc=example,dc=org": {
+		"objectclass": "group",
+		"cn": "horde1000",
+		"entryuuid": "d0d576eb-f7ac-45e2-8e69-a2a1e079556b"
+	}
+}
