@@ -32,19 +32,30 @@ func matchesFilterNot(node *gabs.Container, f message.FilterNot) (bool) {
 	return false
 }
 func matchesFilterEqualityMatch(node *gabs.Container, f message.FilterEqualityMatch) (bool) {
-	if node.Search(strings.ToLower(string(f.AttributeDesc()))).Data() == string(f.AssertionValue()) {
-		log.Printf("= filter %+v matches %+v", f, node)
-		return true
+	n := node.Search(strings.ToLower(string(f.AttributeDesc())))
+	children, err := n.Children()
+	if err != nil {
+		if n.Data() == string(f.AssertionValue()) {
+			log.Printf("= filter %+v matches %+v value %+v", f, node, n)
+			return true
+		}
+	} else {
+		for _, value := range children {
+			if value.Data() == string(f.AssertionValue()) {
+				log.Printf("= filter %+v matches %+v value %+v in %+v", f, node, value, children)
+				return true
+			}
+		}
 	}
-	//log.Printf("= filter %+v does not match %+v", f, node)
+	log.Printf("= filter %+v does not match %+v values %+v", f, node, n)
 	return false
 }
 func matchesFilterGreaterOrEqual(node *gabs.Container, f message.FilterGreaterOrEqual) (bool) {
-	log.Printf(">= filter %+v", f)
+	log.Printf(">= filter %+v NEEDS IMPLEMENTING", f) // TODO not yet implemented
 	return false
 }
 func matchesFilterLessOrEqual(node *gabs.Container, f message.FilterLessOrEqual) (bool) {
-	log.Printf("<= filter %+v", f)
+	log.Printf("<= filter %+v NEEDS IMPLEMENTING", f) // TODO not yet implemented
 	return false
 }
 func matchesFilterPresent(node *gabs.Container, f message.FilterPresent) (bool) {
@@ -56,7 +67,7 @@ func matchesFilterPresent(node *gabs.Container, f message.FilterPresent) (bool) 
 	return false
 }
 func matchesFilterApproxMatch(node *gabs.Container, f message.FilterApproxMatch) (bool) {
-	log.Printf("~ filter %+v", f)
+	log.Printf("~ filter %+v NEEDS IMPLEMENTING", f) // TODO not yet implemented
 	return false
 }
 func matchesFilterSubstrings(node *gabs.Container, f message.FilterSubstrings) (bool) {

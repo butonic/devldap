@@ -3,14 +3,12 @@ package main
 import (
 	"encoding/asn1"
 	"encoding/hex"
-	"fmt"
 	"log"
 	"strings"
 
 	ldap "github.com/vjeantet/ldapserver"
 	"github.com/vjeantet/goldap/message"
 )
-
 
 func handleNotFound(w ldap.ResponseWriter, r *ldap.Message) {
 	switch r.ProtocolOpType() {
@@ -78,6 +76,25 @@ type SearchControlValue struct {
 	Cookie	string
 }
 
+func addAttributeValue(e *message.SearchResultEntry, attribute message.LDAPString, values []string) {
+	//log.Printf("Adding Attribute %s with values %s", attribute, values)
+	attributeValues := make([]message.AttributeValue, len(values))
+	for i, value := range values {
+		if (strings.HasPrefix(value, "{hex}")) {
+			bytes, err :=  hex.DecodeString(value[5:])
+			if err != nil {
+				log.Printf("could not decode hex string %s to bytes", value)
+			}
+			log.Printf("Adding Attribute %s with hex value %s", attribute, value)
+			attributeValues[i] = message.AttributeValue(bytes)
+		} else {
+			log.Printf("Adding Attribute %s with value %s", attribute, value)
+			attributeValues[i] = message.AttributeValue(value)
+		}
+	}
+	e.AddAttribute(message.AttributeDescription(attribute), attributeValues...)
+}
+
 func handleSearch(w ldap.ResponseWriter, m *ldap.Message) {
 	r := m.GetSearchRequest()
 	log.Printf("Request BaseDn=%s", r.BaseObject())
@@ -109,9 +126,9 @@ func handleSearch(w ldap.ResponseWriter, m *ldap.Message) {
 	children, _ := jsonParsed.ChildrenMap()
 	for key, child := range children {
 		if strings.HasSuffix(key, string(r.BaseObject())) {
-			fmt.Printf("checking node: %v\n", key)
+			log.Printf("checking node: %v\n", key)
 			if (matches(child, r.Filter())) {
-				fmt.Printf("found match %v\n", child)
+				log.Printf("found match %v\n", child)
 				e := ldap.NewSearchResultEntry(key)
 				for _, ldapAttribute := range r.Attributes() {
 					attribute := strings.ToLower(string(ldapAttribute))
@@ -119,26 +136,27 @@ func handleSearch(w ldap.ResponseWriter, m *ldap.Message) {
 						continue
 					}
 					value := child.Search(attribute)
-					fmt.Printf("checking attribute: %+v for value: %+v\n", attribute, value)
+					log.Printf("checking attribute: %+v for value: %+v\n", attribute, value)
 					if (value != nil) {
-						log.Printf("Adding Attribute %s with value %s", attribute, value)
 
-						stringValue := value.Data().(string);
-						if (strings.HasPrefix(stringValue, "{hex}")) {
-							bytes, err :=  hex.DecodeString(stringValue[5:])
-							if err != nil {
-								log.Printf("could not decode hex string %s to bytes", stringValue)
-							}
-							e.AddAttribute(message.AttributeDescription(attribute), message.AttributeValue(bytes))
+						children, err := value.Children()
+						var values []string
+						if err != nil {
+							values = []string{value.Data().(string)}
 						} else {
-							e.AddAttribute(message.AttributeDescription(attribute), message.AttributeValue(stringValue))
+							values = make([]string, len(children))
+							for i, child := range children {
+								values[i] = child.Data().(string)
+							}
 						}
+						addAttributeValue(&e, ldapAttribute, values)
+
 					}
 				}
 				w.Write(e)
 			}
 		} else {
-			fmt.Printf("node: %v not in basedn %v\n", key, r.BaseObject())
+			log.Printf("node: %v not in basedn %v\n", key, r.BaseObject())
 		}
 	}
 
