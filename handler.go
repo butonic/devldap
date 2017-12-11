@@ -95,12 +95,14 @@ func handleSearch(w ldap.ResponseWriter, m *ldap.Message) {
 	default:
 	}
 
-	for _, control := range *m.Controls() {
-		if control.ControlType() == "1.2.840.113556.1.4.319" {
-			var controlValue SearchControlValue
-			/*rest, err := */asn1.Unmarshal(control.ControlValue().Bytes(), &controlValue)
-			log.Printf("Paged search request %+v", controlValue)
-			// TODO implement paged search
+	if m.Controls() != nil {
+		for _, control := range *m.Controls() {
+			if control.ControlType() == "1.2.840.113556.1.4.319" {
+				var controlValue SearchControlValue
+				/*rest, err := */asn1.Unmarshal(control.ControlValue().Bytes(), &controlValue)
+				log.Printf("Paged search request %+v", controlValue)
+				// TODO implement paged search
+			}
 		}
 	}
 
@@ -111,14 +113,15 @@ func handleSearch(w ldap.ResponseWriter, m *ldap.Message) {
 			if (matches(child, r.Filter())) {
 				fmt.Printf("found match %v\n", child)
 				e := ldap.NewSearchResultEntry(key)
-				for _, attribute := range r.Attributes() {
+				for _, ldapAttribute := range r.Attributes() {
+					attribute := strings.ToLower(string(ldapAttribute))
 					if attribute == "dn" {
 						continue
 					}
-					value := child.Search(string(attribute))
+					value := child.Search(attribute)
 					fmt.Printf("checking attribute: %+v for value: %+v\n", attribute, value)
 					if (value != nil) {
-						log.Printf("Adding Attribute %s with value %s", string(attribute), value)
+						log.Printf("Adding Attribute %s with value %s", attribute, value)
 
 						stringValue := value.Data().(string);
 						if (strings.HasPrefix(stringValue, "{hex}")) {
@@ -126,9 +129,9 @@ func handleSearch(w ldap.ResponseWriter, m *ldap.Message) {
 							if err != nil {
 								log.Printf("could not decode hex string %s to bytes", stringValue)
 							}
-							e.AddAttribute(message.AttributeDescription(string(attribute)), message.AttributeValue(bytes))
+							e.AddAttribute(message.AttributeDescription(attribute), message.AttributeValue(bytes))
 						} else {
-							e.AddAttribute(message.AttributeDescription(string(attribute)), message.AttributeValue(stringValue))
+							e.AddAttribute(message.AttributeDescription(attribute), message.AttributeValue(stringValue))
 						}
 					}
 				}

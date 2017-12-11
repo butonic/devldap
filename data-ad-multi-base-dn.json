@@ -11,10 +11,10 @@
 		"cn": "zombie1000",
 		"userpassword": "123",
 		"mail": "alicia@example.org",
-		"mailAdditional": ["alice@example.org", "ali@example.org"],
+		"mailadditional": ["alice@example.org", "ali@example.org"],
 		"entryuuid": "a7cc3c2e-498b-429d-b519-3ea330afc61d",
 		"objectguid": "{hex}135c27b56664fd43a129a12a6d3d9a0d",
-		"NameID": "alicia@example.org"
+		"nameid": "alicia@example.org"
 	},
 	"cn=zombie1001,ou=users,dc=example,dc=org": {
 		"objectclass": "inetOrgPerson",
