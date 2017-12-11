@@ -1,6 +1,7 @@
 # The developers LDAP server
 Minimal LDAP server backed by a json file for development and probably testing
 
+
 # Usage example
 These are the default CLI options
 ```console

@@ -4,7 +4,7 @@
 		"userpassword": "admin"
 	},
 
-	"ou=Users,dc=example,dc=org": {},
+	"ou=users,dc=example,dc=org": {},
 	"cn=zombie1000,ou=users,dc=example,dc=org": {
 		"objectclass": "inetOrgPerson",
 		"displayname": "Alice",
@@ -38,7 +38,7 @@
 		"entryuuid": "16a6eaad-064a-4fa2-9d23-59d3e4d357c2"
 	},
 
-	"ou=Groups,dc=example,dc=org": {},
+	"ou=groups,dc=example,dc=org": {},
 	"cn=horde1000,ou=groups,dc=example,dc=org": {
 		"objectclass": "group",
 		"cn": "horde1000",

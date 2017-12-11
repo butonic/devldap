@@ -77,11 +77,15 @@ func matchesFilterSubstrings(node *gabs.Container, f message.FilterSubstrings) (
 		}
 	search += "$"
 	search = strings.Replace(strings.Replace(search, "**", "*", -1), "*", ".*", -1)
+	value := node.Search(strings.ToLower(string(f.Type_()))).Data()
+	log.Printf("%s filter %+v checking %+v with value %+v (regex=%s)", filters, f, node, value, search)
 	re := regexp.MustCompile(search)
-	if re.MatchString(node.Search(strings.ToLower(string(f.Type_()))).Data().(string)) {
-		log.Printf("%s filter %+v matches %+v (regex=%s)", filters, f, node, search)
+
+	if value != nil && re.MatchString(value.(string)) {
+		log.Printf("matches")
 		return true
 	}
+	log.Printf("does not match")
 	return false
 }
 func matchesFilterFilterExtensibleMatch(node *gabs.Container, f message.FilterExtensibleMatch) (bool) {
