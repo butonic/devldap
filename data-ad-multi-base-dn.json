@@ -15,7 +15,8 @@
 		"entryuuid": "a7cc3c2e-498b-429d-b519-3ea330afc61d",
 		"customuid": "a7cc3c2e",
 		"objectguid": "{hex}135c27b56664fd43a129a12a6d3d9a0d",
-		"nameid": "alicia@example.org"
+		"nameid": "alicia@example.org",
+		"memberof": ["cn=horde1000,ou=groups,dc=example,dc=org","cn=horde1001,ou=groups,dc=example,dc=org"]
 	},
 	"cn=zombie1001,ou=users,dc=example,dc=org": {
 		"objectclass": "inetOrgPerson",
@@ -25,7 +26,8 @@
 		"mail": "bobbie@example.org",
 		"othermailbox": ["b@example.org", "bo@example.org"],
 		"entryuuid": "943c5f20-cc47-4d43-9c26-af297c5150b2",
-		"customuid": "943c5f20"
+		"customuid": "943c5f20",
+		"memberof": ["cn=horde1000,ou=groups,dc=example,dc=org","cn=horde1002,ou=groups,dc=example,dc=org"]
 	},
 	"cn=zombie1002,ou=users,dc=example,dc=org": {
 		"objectclass": "inetOrgPerson",
@@ -34,7 +36,8 @@
 		"userpassword": "123",
 		"mail": "carol@example.org",
 		"entryuuid": "01b34dab-93d4-4778-b8c9-f32419d0ba44",
-		"customuid": "01b34dab"
+		"customuid": "01b34dab",
+		"memberof": ["cn=horde1000,ou=groups,dc=example,dc=org","cn=horde1003,ou=groups,dc=example,dc=org"]
 	},
 	"cn=zombie1003,ou=users,dc=example,dc=org": {
 		"objectclass": "inetOrgPerson",
@@ -43,16 +46,68 @@
 		"userpassword": "123",
 		"mail": "dave@example.org",
 		"entryuuid": "16a6eaad-064a-4fa2-9d23-59d3e4d357c2",
-		"customuid": "16a6eaad"
+		"customuid": "16a6eaad",
+		"memberof": ["cn=horde1000,ou=groups,dc=example,dc=org"]
 	},
 
-	"ou=Groups,dc=example,dc=org": {},
+	"ou=groups,dc=example,dc=org": {},
 	"cn=horde1000,ou=groups,dc=example,dc=org": {
 		"objectclass": "group",
 		"cn": "horde1000",
 		"entryuuid": "d0d576eb-f7ac-45e2-8e69-a2a1e079556b",
-		"customuid": "d0d576eb"
+		"customuid": "d0d576eb",
+		"memberuid": ["zombie1003"]
 	},
+	"cn=horde1001,ou=groups,dc=example,dc=org": {
+		"objectclass": "group",
+		"cn": "horde1001",
+		"entryuuid": "51099587-0d74-4568-8268-c7ba70359ff2",
+		"customuid": "51099587"
+	},
+	"cn=horde1002,ou=groups,dc=example,dc=org": {
+		"objectclass": "group",
+		"cn": "horde1002",
+		"entryuuid": "7045c18b-0f68-448f-bb15-498c19ffab9a",
+		"customuid": "7045c18b"
+	},
+	"cn=horde1003,ou=groups,dc=example,dc=org": { "objectclass": "group", "cn": "horde1003", "entryuuid": "f8c935fd-891b-4bf2-aa19-fca58c858d0b" },
+	"cn=horde1004,ou=groups,dc=example,dc=org": { "objectclass": "group", "cn": "horde1004", "entryuuid": "7b794463-886c-4a80-b0f1-88feaebbaece" },
+	"cn=horde1005,ou=groups,dc=example,dc=org": { "objectclass": "group", "cn": "horde1005", "entryuuid": "4ec8c987-3bab-4bc0-8111-16841ca50fe3" },
+	"cn=horde1006,ou=groups,dc=example,dc=org": { "objectclass": "group", "cn": "horde1006", "entryuuid": "1d3fc7fd-4649-4071-b3c3-c4aa3c8ecb12" },
+	"cn=horde1007,ou=groups,dc=example,dc=org": { "objectclass": "group", "cn": "horde1007", "entryuuid": "121e07ca-727b-4e81-adec-55c183cf5d1e" },
+	"cn=horde1008,ou=groups,dc=example,dc=org": { "objectclass": "group", "cn": "horde1008", "entryuuid": "de485d93-c279-4954-969b-7733d860c91c" },
+	"cn=horde1009,ou=groups,dc=example,dc=org": { "objectclass": "group", "cn": "horde1009", "entryuuid": "e814d975-089d-4eb8-862b-800928fbb536" },
+	"cn=horde1010,ou=groups,dc=example,dc=org": { "objectclass": "group", "cn": "horde1010", "entryuuid": "90f4ce3b-1b36-49ca-b060-07f61f476566" },
+	"cn=horde1011,ou=groups,dc=example,dc=org": { "objectclass": "group", "cn": "horde1011", "entryuuid": "90b1d4c8-967a-4add-87be-701af18fad11" },
+	"cn=horde1012,ou=groups,dc=example,dc=org": { "objectclass": "group", "cn": "horde1012", "entryuuid": "def4ad43-f907-4239-9d4c-7d419ab54dcc" },
+	"cn=horde1013,ou=groups,dc=example,dc=org": { "objectclass": "group", "cn": "horde1013", "entryuuid": "d299a014-57a6-43ba-af3b-ff9c77f79d8c" },
+	"cn=horde1014,ou=groups,dc=example,dc=org": { "objectclass": "group", "cn": "horde1014", "entryuuid": "4e6a52ed-c45b-4b2c-9542-911646bbf1c4" },
+	"cn=horde1015,ou=groups,dc=example,dc=org": { "objectclass": "group", "cn": "horde1015", "entryuuid": "ef1de5cc-2205-4017-9ca5-1593f8c221e2" },
+	"cn=horde1016,ou=groups,dc=example,dc=org": { "objectclass": "group", "cn": "horde1016", "entryuuid": "69aa785d-7dc9-488b-aed9-e11a20a87cb7" },
+	"cn=horde1017,ou=groups,dc=example,dc=org": { "objectclass": "group", "cn": "horde1017", "entryuuid": "cccc7c7b-92c1-480f-b364-ad40bcf35a6d" },
+	"cn=horde1018,ou=groups,dc=example,dc=org": { "objectclass": "group", "cn": "horde1018", "entryuuid": "676745ce-e08a-4deb-a7c5-93997ad70e7a" },
+	"cn=horde1019,ou=groups,dc=example,dc=org": { "objectclass": "group", "cn": "horde1019", "entryuuid": "c03540d3-1b99-4549-bd05-cbf489a3bc8c" },
+	"cn=horde1020,ou=groups,dc=example,dc=org": { "objectclass": "group", "cn": "horde1020", "entryuuid": "b9f10fa2-2174-460c-bebf-5f00db74ca00" },
+	"cn=horde1021,ou=groups,dc=example,dc=org": { "objectclass": "group", "cn": "horde1021", "entryuuid": "68cf232a-f9a3-4975-a31d-7ea6c1466076" },
+	"cn=horde1022,ou=groups,dc=example,dc=org": { "objectclass": "group", "cn": "horde1022", "entryuuid": "5b5fccbd-30b8-4575-b400-be79f3be0261" },
+	"cn=horde1023,ou=groups,dc=example,dc=org": { "objectclass": "group", "cn": "horde1023", "entryuuid": "02bb6953-d5b5-481c-ab05-7f2eb638381f" },
+	"cn=horde1024,ou=groups,dc=example,dc=org": { "objectclass": "group", "cn": "horde1024", "entryuuid": "cf82a64c-b6c0-4819-bee7-6779f479be15" },
+	"cn=horde1025,ou=groups,dc=example,dc=org": { "objectclass": "group", "cn": "horde1025", "entryuuid": "449d0b23-ff7e-4422-a0a3-16898c2b3038" },
+	"cn=horde1026,ou=groups,dc=example,dc=org": { "objectclass": "group", "cn": "horde1026", "entryuuid": "91d33b88-c387-4109-a797-ba42e02f5b16" },
+	"cn=horde1027,ou=groups,dc=example,dc=org": { "objectclass": "group", "cn": "horde1027", "entryuuid": "136ed71d-21b3-4633-800a-5da4cca4a114" },
+	"cn=horde1028,ou=groups,dc=example,dc=org": { "objectclass": "group", "cn": "horde1028", "entryuuid": "0ac3bc48-6f4c-4182-8c26-7b16d9ea9df5" },
+	"cn=horde1029,ou=groups,dc=example,dc=org": { "objectclass": "group", "cn": "horde1029", "entryuuid": "aa645eae-8bb1-4c9b-aa5d-8def39099f03" },
+	"cn=horde1030,ou=groups,dc=example,dc=org": { "objectclass": "group", "cn": "horde1030", "entryuuid": "d02e9e17-644f-4d2c-a952-22e11d8108e1" },
+	"cn=horde1031,ou=groups,dc=example,dc=org": { "objectclass": "group", "cn": "horde1031", "entryuuid": "f9d3b5c3-4334-4c7e-b6c2-eaaa7e15ad17" },
+	"cn=horde1032,ou=groups,dc=example,dc=org": { "objectclass": "group", "cn": "horde1032", "entryuuid": "aa51678e-dda9-4f8a-afe5-c414a1a0f40e" },
+	"cn=horde1033,ou=groups,dc=example,dc=org": { "objectclass": "group", "cn": "horde1033", "entryuuid": "309d6440-001b-4558-88f3-9d99294f97d0" },
+	"cn=horde1034,ou=groups,dc=example,dc=org": { "objectclass": "group", "cn": "horde1034", "entryuuid": "17309b93-b5c6-4f51-9cdc-b362c33d1983" },
+	"cn=horde1035,ou=groups,dc=example,dc=org": { "objectclass": "group", "cn": "horde1035", "entryuuid": "e5a56ed6-0141-4be3-97fe-4e7953263eab" },
+	"cn=horde1036,ou=groups,dc=example,dc=org": { "objectclass": "group", "cn": "horde1036", "entryuuid": "750866a6-c9a4-4885-8c36-bef2654a30c0" },
+	"cn=horde1037,ou=groups,dc=example,dc=org": { "objectclass": "group", "cn": "horde1037", "entryuuid": "20b17635-ef16-4a72-9cba-e82f28513481" },
+	"cn=horde1038,ou=groups,dc=example,dc=org": { "objectclass": "group", "cn": "horde1038", "entryuuid": "52ff55c0-b71c-46a2-b6c3-3e787b4cbdf3" },
+	"cn=horde1039,ou=groups,dc=example,dc=org": { "objectclass": "group", "cn": "horde1039", "entryuuid": "0a2b1b39-4cdc-45d5-8e54-ea0cbaa6d9ce" },
+	"cn=horde1040,ou=groups,dc=example,dc=org": { "objectclass": "group", "cn": "horde1040", "entryuuid": "968cc11c-b7f3-4576-be3f-091400d26d09" },
 
 	"ou=users,dc=elsewhere,dc=org": {},
 	"cn=zombie1000,ou=users,dc=elsewhere,dc=org": {
