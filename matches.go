@@ -28,18 +28,21 @@ func matchesFilterOr(node *gabs.Container, f message.FilterOr) (bool) {
 	return false
 }
 func matchesFilterNot(node *gabs.Container, f message.FilterNot) (bool) {
-	log.Printf("! filter %+v", f)
+	log.Printf("! filter %+v NEEDS IMPLEMENTING", f) // TODO not yet implemented
 	return false
 }
 func matchesFilterEqualityMatch(node *gabs.Container, f message.FilterEqualityMatch) (bool) {
 	n := node.Search(strings.ToLower(string(f.AttributeDesc())))
+	// is it an array?
 	children, err := n.Children()
 	if err != nil {
+		// check single value
 		if n.Data() == string(f.AssertionValue()) {
 			log.Printf("= filter %+v matches %+v value %+v", f, node, n)
 			return true
 		}
 	} else {
+		// check all elements
 		for _, value := range children {
 			if value.Data() == string(f.AssertionValue()) {
 				log.Printf("= filter %+v matches %+v value %+v in %+v", f, node, value, children)
@@ -88,13 +91,28 @@ func matchesFilterSubstrings(node *gabs.Container, f message.FilterSubstrings) (
 		}
 	search += "$"
 	search = strings.Replace(strings.Replace(search, "**", "*", -1), "*", ".*", -1)
-	value := node.Search(strings.ToLower(string(f.Type_()))).Data()
-	log.Printf("%s filter %+v checking %+v with value %+v (regex=%s)", filters, f, node, value, search)
+	log.Printf("%s filter %+v checking %+v with regex=%s", filters, f, node, search)
 	re := regexp.MustCompile(search)
 
-	if value != nil && re.MatchString(value.(string)) {
-		log.Printf("matches")
-		return true
+	n := node.Search(strings.ToLower(string(f.Type_())))
+	// is it an array?
+	children, err := n.Children()
+	if err != nil {
+		// check single value
+		value := n.Data()
+		if value != nil && re.MatchString(value.(string)) {
+			log.Printf("%+v matches", value)
+			return true
+		}
+	} else {
+		// check all elements
+		for _, child := range children {
+			value := child.Data()
+			if value != nil && re.MatchString(value.(string)) {
+				log.Printf("child %+v matches", value)
+				return true
+			}
+		}
 	}
 	log.Printf("does not match")
 	return false
