@@ -2,18 +2,35 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
 	"os/signal"
 	"syscall"
 
+	"github.com/go-fsnotify/fsnotify"
 	"github.com/Jeffail/gabs"
 	ldap "github.com/vjeantet/ldapserver"
 )
 
 var jsonParsed *gabs.Container
+
+func loadData(file string) (error) {
+	data, err := ioutil.ReadFile(file)
+	if err != nil {
+		return err
+	}
+	log.Printf("loaded %s", file)
+
+	var tmpJson *gabs.Container
+	tmpJson, err = gabs.ParseJSON(data)
+	if err != nil {
+		return err
+	}
+	jsonParsed = tmpJson
+	log.Printf("parsed JSON")
+	return nil
+}
 
 func main() {
 
@@ -21,18 +38,50 @@ func main() {
 	dataFile := flag.String("d", "data.json", "json file with data to serve")
 	flag.Parse()
 
-	data, err := ioutil.ReadFile(*dataFile)
+	err := loadData(*dataFile)
 	if err != nil {
-        fmt.Printf("File error: %v\n", err)
-        os.Exit(1)
-    }
+		log.Printf("ERROR: %v", err)
+		os.Exit(1)
+	}
 
-	jsonParsed, err = gabs.ParseJSON(data)
+	// create a new file watcher, based on https://medium.com/@skdomino/watch-this-file-watching-in-go-5b5a247cf71f
+	watcher, err := fsnotify.NewWatcher()
 	if err != nil {
-        fmt.Printf("Parse error: %v\n", err)
-        os.Exit(1)
-    }
-	log.Printf("serving %s", *dataFile)
+		log.Println("ERROR", err)
+	}
+	defer watcher.Close()
+
+	//nch := make(chan bool)
+
+	go func() {
+		for {
+			select {
+			// watch for events
+			case event := <-watcher.Events:
+				// TODO wait a sec before reparsing and ignore additional notifications in that time
+				if event.Op&fsnotify.Write == fsnotify.Write {
+					log.Printf("modified file: %v, %v, %#v", event.Name, event.Op, event)
+					// reload json
+					err := loadData(*dataFile)
+					if err != nil {
+						log.Printf("ERROR: %v", err)
+					}
+				}
+
+
+				// watch for errors
+			case err := <-watcher.Errors:
+				log.Println("ERROR", err)
+			}
+		}
+	}()
+
+	// out of the box fsnotify can watch a single file, or a single directory
+	if err := watcher.Add(*dataFile); err != nil {
+		log.Println("ERROR", err)
+	}
+
+	//<-nch
 
 	//Create a new LDAP Server
 	server := ldap.NewServer()
