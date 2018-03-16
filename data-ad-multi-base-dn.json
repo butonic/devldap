@@ -16,7 +16,10 @@
 		"customuid": "a7cc3c2e",
 		"objectguid": "{hex}135c27b56664fd43a129a12a6d3d9a0d",
 		"nameid": "alicia@example.org",
-		"memberof": ["cn=horde1000,ou=groups,dc=example,dc=org","cn=horde1001,ou=groups,dc=example,dc=org"]
+		"memberof": [
+			"cn=horde1000,ou=groups,dc=example,dc=org",
+			"cn=horde1001,ou=groups,dc=example,dc=org"
+		]
 	},
 	"cn=zombie1001,ou=users,dc=example,dc=org": {
 		"objectclass": "inetOrgPerson",
@@ -27,7 +30,10 @@
 		"othermailbox": ["b@example.org", "bo@example.org"],
 		"entryuuid": "943c5f20-cc47-4d43-9c26-af297c5150b2",
 		"customuid": "943c5f20",
-		"memberof": ["cn=horde1000,ou=groups,dc=example,dc=org","cn=horde1002,ou=groups,dc=example,dc=org"]
+		"memberof": [
+			"cn=horde1000,ou=groups,dc=example,dc=org",
+			"cn=horde1002,ou=groups,dc=example,dc=org"
+		]
 	},
 	"cn=zombie1002,ou=users,dc=example,dc=org": {
 		"objectclass": "inetOrgPerson",
@@ -37,7 +43,10 @@
 		"mail": "carol@example.org",
 		"entryuuid": "01b34dab-93d4-4778-b8c9-f32419d0ba44",
 		"customuid": "01b34dab",
-		"memberof": ["cn=horde1000,ou=groups,dc=example,dc=org","cn=horde1003,ou=groups,dc=example,dc=org"]
+		"memberof": [
+			"cn=horde1000,ou=groups,dc=example,dc=org",
+			"cn=horde1003,ou=groups,dc=example,dc=org"
+		]
 	},
 	"cn=zombie1003,ou=users,dc=example,dc=org": {
 		"objectclass": "inetOrgPerson",
@@ -56,21 +65,34 @@
 		"cn": "horde1000",
 		"entryuuid": "d0d576eb-f7ac-45e2-8e69-a2a1e079556b",
 		"customuid": "d0d576eb",
-		"memberuid": ["zombie1003"]
+		"uniquemember": [
+			"cn=zombie1000,ou=users,dc=example,dc=org",
+			"cn=zombie1001,ou=users,dc=example,dc=org",
+			"cn=zombie1002,ou=users,dc=example,dc=org",
+			"cn=zombie1003,ou=users,dc=example,dc=org"
+		]
 	},
 	"cn=horde1001,ou=groups,dc=example,dc=org": {
 		"objectclass": "group",
 		"cn": "horde1001",
 		"entryuuid": "51099587-0d74-4568-8268-c7ba70359ff2",
-		"customuid": "51099587"
+		"customuid": "51099587",
+		"uniquemember": ["cn=zombie1000,ou=users,dc=example,dc=org"]
 	},
 	"cn=horde1002,ou=groups,dc=example,dc=org": {
 		"objectclass": "group",
 		"cn": "horde1002",
 		"entryuuid": "7045c18b-0f68-448f-bb15-498c19ffab9a",
-		"customuid": "7045c18b"
+		"customuid": "7045c18b",
+		"uniquemember": ["cn=zombie1001,ou=users,dc=example,dc=org"]
 	},
-	"cn=horde1003,ou=groups,dc=example,dc=org": { "objectclass": "group", "cn": "horde1003", "entryuuid": "f8c935fd-891b-4bf2-aa19-fca58c858d0b" },
+	"cn=horde1003,ou=groups,dc=example,dc=org": {
+	       	"objectclass": "group",
+	       	"cn": "horde1003",
+	       	"entryuuid": "f8c935fd-891b-4bf2-aa19-fca58c858d0b",
+		"customuid": "f8c935fd",
+		"uniquemember": ["cn=zombie1002,ou=users,dc=example,dc=org"]
+       	},
 	"cn=horde1004,ou=groups,dc=example,dc=org": { "objectclass": "group", "cn": "horde1004", "entryuuid": "7b794463-886c-4a80-b0f1-88feaebbaece" },
 	"cn=horde1005,ou=groups,dc=example,dc=org": { "objectclass": "group", "cn": "horde1005", "entryuuid": "4ec8c987-3bab-4bc0-8111-16841ca50fe3" },
 	"cn=horde1006,ou=groups,dc=example,dc=org": { "objectclass": "group", "cn": "horde1006", "entryuuid": "1d3fc7fd-4649-4071-b3c3-c4aa3c8ecb12" },
