@@ -10,5 +10,9 @@ $ ./devldap -d mydata.json -l 127.0.0.1:1234
 
 The server stays in foreground and logs what is happening.
 
+# Links
+* generate objectguids here: https://www.guidgenerator.com/online-guid-generator.aspx - untic 'hyphens' and prefix with `{hex}`
+
 # Kudos
+* https://github.com/lor00x/goldap
 * https://github.com/vjeantet/ldapserver

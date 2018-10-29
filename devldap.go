@@ -8,14 +8,14 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/go-fsnotify/fsnotify"
 	"github.com/Jeffail/gabs"
-	ldap "github.com/vjeantet/ldapserver"
+	ldap "github.com/butonic/ldapserver"
+	"github.com/go-fsnotify/fsnotify"
 )
 
 var jsonParsed *gabs.Container
 
-func loadData(file string) (error) {
+func loadData(file string) error {
 	data, err := ioutil.ReadFile(file)
 	if err != nil {
 		return err
@@ -67,7 +67,6 @@ func main() {
 						log.Printf("ERROR: %v", err)
 					}
 				}
-
 
 				// watch for errors
 			case err := <-watcher.Errors:

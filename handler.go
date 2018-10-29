@@ -6,8 +6,8 @@ import (
 	"log"
 	"strings"
 
-	ldap "github.com/vjeantet/ldapserver"
-	"github.com/vjeantet/goldap/message"
+	ldap "github.com/butonic/ldapserver"
+	"github.com/lor00x/goldap/message"
 )
 
 func handleNotFound(w ldap.ResponseWriter, r *ldap.Message) {
@@ -72,16 +72,16 @@ func handleWhoAmI(w ldap.ResponseWriter, m *ldap.Message) {
 }
 
 type SearchControlValue struct {
-	Size	int
-	Cookie	string
+	Size   int
+	Cookie string
 }
 
 func addAttributeValue(e *message.SearchResultEntry, attribute message.LDAPString, values []string) {
 	//log.Printf("Adding Attribute %s with values %s", attribute, values)
 	attributeValues := make([]message.AttributeValue, len(values))
 	for i, value := range values {
-		if (strings.HasPrefix(value, "{hex}")) {
-			bytes, err :=  hex.DecodeString(value[5:])
+		if strings.HasPrefix(value, "{hex}") {
+			bytes, err := hex.DecodeString(value[5:])
 			if err != nil {
 				log.Printf("could not decode hex string %s to bytes", value)
 			}
@@ -116,7 +116,7 @@ func handleSearch(w ldap.ResponseWriter, m *ldap.Message) {
 		for _, control := range *m.Controls() {
 			if control.ControlType() == "1.2.840.113556.1.4.319" {
 				var controlValue SearchControlValue
-				/*rest, err := */asn1.Unmarshal(control.ControlValue().Bytes(), &controlValue)
+				/*rest, err := */ asn1.Unmarshal(control.ControlValue().Bytes(), &controlValue)
 				log.Printf("Paged search request %+v", controlValue)
 				// TODO implement paged search
 			}
@@ -127,7 +127,7 @@ func handleSearch(w ldap.ResponseWriter, m *ldap.Message) {
 	for key, child := range children {
 		if strings.HasSuffix(key, string(r.BaseObject())) {
 			log.Printf("checking node: %v\n", key)
-			if (matches(child, r.Filter())) {
+			if matches(child, r.Filter()) {
 				log.Printf("found match %v\n", child)
 				e := ldap.NewSearchResultEntry(key)
 				for _, ldapAttribute := range r.Attributes() {
@@ -137,7 +137,7 @@ func handleSearch(w ldap.ResponseWriter, m *ldap.Message) {
 					}
 					value := child.Search(attribute)
 					log.Printf("checking attribute: %+v for value: %+v\n", attribute, value)
-					if (value != nil) {
+					if value != nil {
 
 						children, err := value.Children()
 						var values []string
