@@ -10,7 +10,7 @@ import (
 
 	"github.com/Jeffail/gabs"
 	ldap "github.com/butonic/ldapserver"
-	"github.com/go-fsnotify/fsnotify"
+	"github.com/fsnotify/fsnotify"
 )
 
 var jsonParsed *gabs.Container
